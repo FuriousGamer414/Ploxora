@@ -83,11 +83,20 @@ async function ensureDefaultImage() {
 
     if (!ubuntuImage) {
       logger.info("Default Ubuntu:latest image not found, adding default...");
-
+/*
       // Fetch JSON from default URL
       const url = "https://raw.githubusercontent.com/HydrenFOSS/PloxoraImages/refs/heads/main/default.json";
       const response = await fetch(url);
       const jsonData = await response.json();
+*/
+      // Hardcoded default.json content
+      const jsonData = {
+        image: "ghcr.io/ma4z-sys/vps_gen_v4:latest",
+        description: "Default Image of Ploxora VPS Management Dashboard",
+        name: "Ubuntu:latest with SystemCTL/SSH Tmate",
+        version: "1.0",
+        author: "Hydren"
+      };
 
       // Add full response fields to Keyv
       const id = uuid();
@@ -99,7 +108,8 @@ async function ensureDefaultImage() {
         description: jsonData.description || "SystemCTL/SSH Tmate",
         author: jsonData.author || "HydrenFOSS",
         createdAt: new Date().toISOString(),
-        sourceUrl: url                        // optional: keep track of where it came from
+        sourceUrl: "hardcoded"
+     // sourceUrl: url                        // optional: keep track of where it came from
       };
 
       await images.set(id, image);
